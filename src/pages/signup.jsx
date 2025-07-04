@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
+// ✅ Use backend URL from environment
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -20,7 +23,8 @@ const Signup = () => {
     setStatus("Signing up...");
 
     try {
-      const res = await fetch("http://localhost:5000/api/signup", {
+      // ✅ Use API_URL from .env
+      const res = await fetch(`${API_URL}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -37,6 +41,7 @@ const Signup = () => {
       }
     } catch (err) {
       setStatus("❌ Error connecting to server");
+      console.error("Signup error:", err);
     }
   };
 
