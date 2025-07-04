@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useUser } from "../UserContext"; // ✅ import context
+import { useUser } from "../UserContext";
+
+// ✅ Use API base URL from .env
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,9 +13,8 @@ const Login = () => {
 
   const [status, setStatus] = useState("");
   const navigate = useNavigate();
-  const { user, login } = useUser(); // ✅ get user & login function from context
+  const { user, login } = useUser();
 
-  // ✅ Redirect if already logged in
   useEffect(() => {
     if (user) navigate("/");
   }, [user, navigate]);
@@ -26,7 +28,8 @@ const Login = () => {
     setStatus("Logging in...");
 
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      // ✅ Use env API URL here
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -37,14 +40,14 @@ const Login = () => {
 
       if (res.ok) {
         setStatus("✅ Login successful!");
-        login(data.user); // ✅ login using context
-        navigate("/"); // ✅ Redirect
+        login(data.user);
+        navigate("/");
       } else {
         setStatus("❌ " + data.message);
       }
     } catch (err) {
       console.error("❌ Error logging in:", err);
-      setStatus("❌ Error logging in.");
+      setStatus("❌ Error connecting to server.");
     }
   };
 
