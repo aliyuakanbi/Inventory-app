@@ -16,12 +16,14 @@ const MonthlyAssessment = () => {
     setItems([]);
 
     if (!month || !year) {
-      setError("Please select both month and year");
+      setError("⚠️ Please select both month and year");
       return;
     }
 
     try {
       const res = await fetch(`${API_URL}/items`);
+      if (!res.ok) throw new Error("Server error");
+
       const allItems = await res.json();
 
       const filtered = allItems.filter((item) => {
@@ -44,14 +46,15 @@ const MonthlyAssessment = () => {
 
       setItems(filtered);
     } catch (err) {
-      console.error(err);
-      setError("❌ Failed to connect to server");
+      console.error("❌ Error fetching items:", err);
+      setError("❌ Failed to connect to server. Please try again later.");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 py-10">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-black dark:text-white">
+       <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-black dark:text-white mx-auto sm:px-4">
+
         <h2 className="text-2xl font-bold mb-6 text-center">
           📅 Monthly Assessment
         </h2>
