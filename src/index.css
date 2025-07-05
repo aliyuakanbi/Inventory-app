@@ -156,7 +156,7 @@ form button:hover {
 }
 .page-container {
   padding: 2rem;
-  min-height: 500vh;
+  min-height: 100vh;
   background-color: gray;
 }
 
