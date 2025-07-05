@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+// ✅ Load API base URL from environment
+const API_URL = import.meta.env.VITE_API_URL;
+
 const AddItem = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -22,7 +25,7 @@ const AddItem = () => {
     setStatus("Submitting...");
 
     try {
-      // ✅ Convert dates to Date objects
+      // ✅ Format the item to send
       const itemToSend = {
         ...formData,
         price: parseFloat(formData.price),
@@ -30,7 +33,8 @@ const AddItem = () => {
         expiryDate: new Date(formData.expiryDate),
       };
 
-      const res = await fetch("http://localhost:5000/api/items", {
+      // ✅ Use environment-based API URL
+      const res = await fetch(`${API_URL}/items`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemToSend),
