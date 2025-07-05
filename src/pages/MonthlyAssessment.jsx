@@ -51,19 +51,19 @@ const MonthlyAssessment = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 py-10">
-       <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg text-black dark:text-white mx-auto sm:px-4">
+ return (
+  <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center px-2">
+    <div className="w-full max-w-xs sm:max-w-sm md:max-w-md bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-lg text-black dark:text-white overflow-hidden">
+      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center">
+        📅 Monthly Assessment
+      </h2>
 
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          📅 Monthly Assessment
-        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <select
             value={month}
             onChange={(e) => setMonth(e.target.value)}
-            className="w-full p-3 rounded text-black"
+            className="w-full p-3 text-sm rounded text-black"
           >
             <option value="">Select Month</option>
             {[...Array(12)].map((_, i) => (
@@ -78,30 +78,30 @@ const MonthlyAssessment = () => {
             value={year}
             onChange={(e) => setYear(e.target.value)}
             placeholder="Enter year e.g. 2025"
-            className="w-full p-3 rounded text-black"
+            className="w-full p-3 text-sm rounded text-black"
           />
 
           <button
             type="submit"
-            className="bg-blue-600 text-white w-full py-3 rounded hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white w-full py-3 rounded hover:bg-blue-700 transition text-sm"
           >
             Get Summary
           </button>
         </form>
 
-        {error && <p className="text-red-500 mt-4 text-sm">{error}</p>}
+        {error && <p className="text-red-500 mt-4 text-sm text-center">{error}</p>}
 
         {summary && (
-          <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow">
-            <h3 className="text-xl font-semibold mb-2">{summary.month}</h3>
-            <p>🧾 Total Items Bought: <strong>{summary.totalItems}</strong></p>
+          <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow text-sm">
+            <h3 className="text-lg font-semibold mb-2 text-center">{summary.month}</h3>
+            <p className="mb-1">🧾 Total Items Bought: <strong>{summary.totalItems}</strong></p>
             <p>💸 Total Amount Spent: <strong>₦{summary.totalSpent}</strong></p>
           </div>
         )}
 
         {items.length > 0 && (
-          <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow">
-            <h4 className="text-lg font-bold mb-4">🗒 Items List</h4>
+          <div className="mt-6 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow text-sm">
+            <h4 className="text-lg font-bold mb-4 text-center">🗒 Items List</h4>
             <ul className="space-y-2">
               {items.map((item) => (
                 <li
