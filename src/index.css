@@ -126,7 +126,7 @@ button:focus-visible {
 
 form {
   width: 950%;
-  max-width: 300px;
+  max-width: 350px;
   background: white;
   padding: 1.5rem;
   border-radius: 10px;
@@ -148,7 +148,7 @@ form button {
   background-color: #007bff;
   color: white;
   border: none;
-  width: 300px;
+  width: 350px;
 }
 
 form button:hover {
@@ -202,7 +202,7 @@ form {
   padding: 1.5rem;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 350px) {
   form {
     padding: 1rem;
   }
