@@ -17,7 +17,10 @@ import Login from "./pages/Login";
 import Signup from "./pages/signup";
 
 function App() {
-  const { user } = useUser(); // ✅ get user from context
+  const { user, loading } = useUser(); // ✅ include loading state
+
+  if (loading) return null; // ✅ don't render anything until context is ready
+  // Optional: use a spinner or "Loading..." text instead
 
   return (
     <>
@@ -31,78 +34,15 @@ function App() {
           <Route path="/signup" element={<Signup />} />
 
           {/* Protected Routes */}
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/add"
-            element={
-              <PrivateRoute>
-                <AddItem />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/items"
-            element={
-              <PrivateRoute>
-                <ViewItems />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/items/:id"
-            element={
-              <PrivateRoute>
-                <ItemDetails />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/expiring"
-            element={
-              <PrivateRoute>
-                <ExpiringSoon />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/monthly"
-            element={
-              <PrivateRoute>
-                <MonthlyAssessment />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/log"
-            element={
-              <PrivateRoute>
-                <ActivityLog />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <PrivateRoute>
-                <Admin />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              <PrivateRoute>
-                <About />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/add" element={<PrivateRoute><AddItem /></PrivateRoute>} />
+          <Route path="/items" element={<PrivateRoute><ViewItems /></PrivateRoute>} />
+          <Route path="/items/:id" element={<PrivateRoute><ItemDetails /></PrivateRoute>} />
+          <Route path="/expiring" element={<PrivateRoute><ExpiringSoon /></PrivateRoute>} />
+          <Route path="/monthly" element={<PrivateRoute><MonthlyAssessment /></PrivateRoute>} />
+          <Route path="/log" element={<PrivateRoute><ActivityLog /></PrivateRoute>} />
+          <Route path="/admin" element={<PrivateRoute><Admin /></PrivateRoute>} />
+          <Route path="/about" element={<PrivateRoute><About /></PrivateRoute>} />
         </Routes>
       </div>
     </>

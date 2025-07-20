@@ -1,27 +1,31 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../UserContext"; // ✅ import context
+import { useUser } from "../UserContext";
 import "./navbar.css";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-
-  const { user, logout } = useUser(); // ✅ get user and logout from context
+  const { user, logout } = useUser();
 
   const handleLogout = () => {
-    logout();          // ✅ clears user & localStorage
+    logout();
     navigate("/login");
   };
 
-  if (!user) return null; // ✅ Hide navbar completely if not logged in
+  if (!user) return null;
 
   return (
     <nav className="navbar">
-      <div className="navbar-brand">🏠 Household Tracker</div>
-
-      <div className="menu-toggle" onClick={() => setOpen(!open)}>
-        ☰
+      <div className="navbar-top">
+        <div className="navbar-brand">🏠 Household Tracker</div>
+        <button
+          className="menu-toggle"
+          onClick={() => setOpen(!open)}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
       </div>
 
       <div className={`nav-links ${open ? "active" : ""}`}>
@@ -34,12 +38,11 @@ const Navbar = () => {
         <Link to="/admin" onClick={() => setOpen(false)}>Admin</Link>
         <Link to="/about" onClick={() => setOpen(false)}>About</Link>
 
-        {/* ✅ Show logout button */}
         <button
           onClick={handleLogout}
           className="logout-btn"
         >
-          Logout
+          🔓 Logout
         </button>
       </div>
     </nav>

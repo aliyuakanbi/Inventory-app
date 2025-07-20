@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../UserContext";
 
-// ✅ Use API base URL from .env
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
@@ -10,10 +9,9 @@ const Login = () => {
     email: "",
     password: "",
   });
-
   const [status, setStatus] = useState("");
-  const navigate = useNavigate();
   const { user, login } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) navigate("/");
@@ -28,7 +26,6 @@ const Login = () => {
     setStatus("Logging in...");
 
     try {
-      // ✅ Use env API URL here
       const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -39,21 +36,21 @@ const Login = () => {
       console.log("📦 Login response:", data);
 
       if (res.ok) {
+        login(data.user); // ✅ Save to context + localStorage
         setStatus("✅ Login successful!");
-        login(data.user);
         navigate("/");
       } else {
-        setStatus("❌ " + data.message);
+        setStatus("❌ " + (data.message || "Invalid credentials"));
       }
     } catch (err) {
-      console.error("❌ Error logging in:", err);
-      setStatus("❌ Error connecting to server.");
+      console.error("❌ Login error:", err);
+      setStatus("❌ Could not connect to server.");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
+      <div className="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-xl w-full max-w-md shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           Login
         </h2>
@@ -66,7 +63,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Email"
             required
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           />
           <input
             id="password"
@@ -75,7 +72,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Password"
             required
-            className="w-full p-3 border border-gray-300 rounded-md"
+            className="w-full p-3 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           />
 
           <button
@@ -99,7 +96,7 @@ const Login = () => {
         </div>
 
         {status && (
-          <p className="mt-4 text-center text-sm text-gray-700 dark:text-gray-300">
+          <p className="mt-4 text-center text-sm text-red-600 dark:text-red-400">
             {status}
           </p>
         )}

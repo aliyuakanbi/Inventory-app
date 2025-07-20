@@ -25,7 +25,6 @@ const AddItem = () => {
     setStatus("Submitting...");
 
     try {
-      // ✅ Format the item to send
       const itemToSend = {
         ...formData,
         price: parseFloat(formData.price),
@@ -33,7 +32,6 @@ const AddItem = () => {
         expiryDate: new Date(formData.expiryDate),
       };
 
-      // ✅ Use environment-based API URL
       const res = await fetch(`${API_URL}/items`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -61,9 +59,9 @@ const AddItem = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 py-10">
+    <div className="min-h-screen w-full flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 py-10 overflow-x-hidden">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
+        <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">
           Add Item
         </h1>
 
